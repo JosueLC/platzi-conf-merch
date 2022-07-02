@@ -1,8 +1,13 @@
 import React from 'react';
+import Products from '../components/Products/index';
+import products from '../initialState';
+import '../styles/components/Products.css';
+
 
 function Home () {
+     const values = products();
     return (
-        <h1>Home</h1>
+        <Products products={values} />
     );
 }
 
