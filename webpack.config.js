@@ -2,11 +2,17 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const myHtmlWebpackPlugin = new HtmlWebpackPlugin({
+  title: 'Platzi Merch',
+  template: './public/index.html'
+});
+
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -22,35 +28,29 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        use: {
-          loader: 'html-loader',
-        },
+        use: ['html-loader'],
       },
       {
         test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          'css-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader,'css-loader'],
       },
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-      filename: 'index.html',
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'assets/[name].css',
-    }),
+    myHtmlWebpackPlugin,
+    new MiniCssExtractPlugin(),
   ],
   devServer: {
-    static: path.join(__dirname, 'dist'),
+    static: {
+      directory: path.resolve(__dirname, 'dist')
+    },
+    devMiddleware: {
+      index: 'index.html',
+    },
     compress: true,
     port: 3200,
     open: true,
+    historyApiFallback: true,
   },
   mode: 'development',
 };
