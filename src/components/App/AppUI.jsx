@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../styles/components/App/appui.css';
+import '../../styles/components/App.css';
 
 function AppUI() {
   return <h1>Hi everyone!</h1>
